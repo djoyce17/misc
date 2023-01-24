@@ -1,6 +1,6 @@
 --I created a cte for each column because I find this to be more readable and easy to make changes to
 
-–-calculating the total appointments that took place within 28 days of moving to var pricing model
+--calculating the total appointments that took place within 28 days of moving to var pricing model
 WITH 
 appts AS
 (
@@ -18,7 +18,7 @@ appts AS
 )
 ,
 
-–calculating the new patient appointments that took place within 28 days of moving to var price model
+--calculating the new patient appointments that took place within 28 days of moving to var price model
 new_appts AS
 (
 	SELECT 
@@ -36,7 +36,7 @@ new_appts AS
 )
 ,
 
-–calculating the new patient appointments that were created and cancelled within 28 days of moving to var price model
+--calculating the new patient appointments that were created and cancelled within 28 days of moving to var price model
 canc AS
 (
 	SELECT 
