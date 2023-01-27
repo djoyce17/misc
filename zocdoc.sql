@@ -31,7 +31,7 @@ new_appts AS
 	AND NOT is_cancelled
 	AND is_new_patient
 	AND datediff(‘day’, p.variable_pricing_activation_time_utc, a.created_at) BETWEEN 0 AND 28
-	AND a.datediff(‘day’, p.variable_pricing_activation_time_utc, a.appointment_time_utc) BETWEEN 0 AND 28
+	AND datediff(‘day’, p.variable_pricing_activation_time_utc, a.appointment_time_utc) BETWEEN 0 AND 28
 	GROUP BY 1
 )
 ,
@@ -49,7 +49,7 @@ canc AS
 	AND is_cancelled
 	AND is_new_patient
 	AND datediff(‘day’, p.variable_pricing_activation_time_utc, a.created_at) BETWEEN 0 AND 28
-	AND a.datediff(‘day’, p.variable_pricing_activation_time_utc, a.appointment_time_utc) BETWEEN 0 AND 28
+	AND datediff(‘day’, p.variable_pricing_activation_time_utc, a.appointment_time_utc) BETWEEN 0 AND 28
 	GROUP BY 1
 )
 ,
@@ -68,12 +68,9 @@ cap AS
 	AND 
 	(
 		datediff(‘day’, p.variable_pricing_activation_time_utc, sc.end_date) BETWEEN 0 AND 28
-		OR end_date IS NULL
+		OR end_date IS NULL --this captures the most recent field where the end date is null
 	)
 	AND start_cap_amount <> end_cap_amount --i was not sure if a new row was added if a customer enters the same cap amount as the previous period so i erred on the side of caution
-	
-	--make sure this captures the most recent field where the end date is null
-	
 	GROUP BY 1
 )
 ,
@@ -92,9 +89,8 @@ lock AS
 	AND 
 	(
 		datediff(‘day’, p.variable_pricing_activation_time_utc, sl.end_date) <= 28
-		OR end_date IS NULL
+		OR end_date IS NULL --this captures the most recent field where the end date is null
 	)
-	--make sure this captures the most recent field where the end date is null
 	GROUP BY 1
 )
 
