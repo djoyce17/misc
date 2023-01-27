@@ -11,7 +11,7 @@ appts AS
 	JOIN database.practices p
 	ON a.practice_id = p.practice_id
 	WHERE 1=1
-	AND datediff(‘day’, p.variable_pricing_activation_time_utc, a.created_at) BETWEEN 0 AND 28
+	AND datediff(‘day’, p.variable_pricing_activation_time_utc, a.created_at_utc) BETWEEN 0 AND 28
 	AND datediff(‘day’, p.variable_pricing_activation_time_utc, a.appointment_time_utc) BETWEEN 0 AND 28
 	AND NOT is_cancelled
 	GROUP BY 1
@@ -30,7 +30,7 @@ new_appts AS
 	WHERE 1=1
 	AND NOT is_cancelled
 	AND is_new_patient
-	AND datediff(‘day’, p.variable_pricing_activation_time_utc, a.created_at) BETWEEN 0 AND 28
+	AND datediff(‘day’, p.variable_pricing_activation_time_utc, a.created_at_utc) BETWEEN 0 AND 28
 	AND datediff(‘day’, p.variable_pricing_activation_time_utc, a.appointment_time_utc) BETWEEN 0 AND 28
 	GROUP BY 1
 )
@@ -48,7 +48,7 @@ canc AS
 	WHERE 1=1
 	AND is_cancelled
 	AND is_new_patient
-	AND datediff(‘day’, p.variable_pricing_activation_time_utc, a.created_at) BETWEEN 0 AND 28
+	AND datediff(‘day’, p.variable_pricing_activation_time_utc, a.created_at_utc) BETWEEN 0 AND 28
 	AND datediff(‘day’, p.variable_pricing_activation_time_utc, a.appointment_time_utc) BETWEEN 0 AND 28
 	GROUP BY 1
 )
